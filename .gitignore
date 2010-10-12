@@ -3,8 +3,11 @@ CMakeFiles
 CMakeFiles/**/*
 Makefile
 cmake_install.cmake
+libOiVibrations.so
+OiVibrations.ndll
 *.swp
-*.o
+config.hpp
+temp.cpp
 #
 tags
-oichimp
+oitest

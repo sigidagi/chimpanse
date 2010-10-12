@@ -14,14 +14,17 @@
 // 
 // =====================================================================================
 
-#include	"OiCore.h"
-#include	"OiRandom.h"
+#include	"core.h"
+#include	"random.h"
 #include	<algorithm>
-
-#define	SIZE 36			//
 
 namespace Oi
 {
+    enum
+    {
+        SIZE = 36
+    };
+
     Core::Core()
     {
         vec_.resize(SIZE);
