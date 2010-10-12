@@ -33,12 +33,13 @@ namespace Oi
         private:
             Ui::MagicTable ui;
             Core* core;
-            QVector<QPushButton*> buttons; 
+            vector<QPushButton*> buttons_; 
 
         public:
             MagicTable(QWidget* parent = 0);
             ~MagicTable();
             void reset();
+            void update();
 
         private slots:
             void on_field01_clicked();

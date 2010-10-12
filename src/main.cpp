@@ -14,44 +14,18 @@
 // 
 // =====================================================================================
 
-
-#include	"core/core.h"
-#include	<iostream>
-#include	<iterator>
-#include	<algorithm>
-#include	<vector>
+#include	"gui/magictable.h"
+#include	<QApplication>
 
 using namespace std;
 
-int main()
+int main(int argc, char* argv[])
 {
-    Oi::Core co;
-    co.setLength(9);
-    co.start();
+    QApplication app(argc, argv);
+    Oi::MagicTable table;
 
-    vector<int> vec;
-    co.getNumbers(vec); 
+    table.show();
 
-    ostream_iterator<int> out_it (cout, ", ");
-    copy(vec.begin(), vec.end(), out_it);
-    cout << endl;
-
-    bool ret;
-    ret = co.tap(100);
-    if (ret)
-        cout << "Correct!\n";
-    else
-    {
-        co.getNumbers(vec);
-        if (vec.empty())
-        {
-            cout << "Bad luck! Start new game!\n";
-            return -1;
-        }
-        cout << "You tapped on empty field! Try again\n";   
-
-    }
-
-    return 0;
+    return app.exec();
 }
 
