@@ -35,14 +35,21 @@ namespace Oi
         if (length >= (unsigned int)vec_.size() )
             return;
         
+        length_ = length;
         vec_.erase(vec_.begin() + length, vec_.end());
     }
 
+    int Core::getLength()
+    {
+        return length_;
+    }
+    
     void Core::start()
     {
-        int size = (int)vec_.size();
         const int* array = Oi::Random<int, SIZE>::shuffle();
-        std::copy(array, array+size, vec_.begin());
+        vec_.clear();
+        vec_.resize(length_);
+        std::copy(array, array+length_, vec_.begin());
     }
 
     bool Core::tap(unsigned int number)

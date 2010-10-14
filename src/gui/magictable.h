@@ -26,12 +26,12 @@ namespace Oi
 {
     class Core;
 
-    class MagicTable : public QDialog
+    class MagicTable : public QDialog, public Ui::MagicTable
     {
         Q_OBJECT
 
         private:
-            Ui::MagicTable ui;
+            //Ui::MagicTable ui;
             Core* core;
             vector<QPushButton*> buttons_; 
 
@@ -40,17 +40,18 @@ namespace Oi
             ~MagicTable();
             void reset();
             void update();
+            void message(const QString& message);
 
         private slots:
-            void on_field01_clicked();
-            void on_field02_clicked();
-            void on_field03_clicked();
-            void on_field04_clicked();
-            void on_field05_clicked();
-            void on_field06_clicked();
-            void on_field07_clicked();
-            void on_field08_clicked();
-            void on_field09_clicked();
+            void on_field1_clicked();
+            void on_field2_clicked();
+            void on_field3_clicked();
+            void on_field4_clicked();
+            void on_field5_clicked();
+            void on_field6_clicked();
+            void on_field7_clicked();
+            void on_field8_clicked();
+            void on_field9_clicked();
             void on_field10_clicked();
             void on_field11_clicked();
             void on_field12_clicked();

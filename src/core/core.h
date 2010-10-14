@@ -28,11 +28,12 @@ namespace Oi
     {
         private:
             vector<int> vec_;
-
+            int length_;
         public:
             Core();
             void start();
             void setLength(unsigned int size);
+            int  getLength();
             bool tap(unsigned int number);
             void getNumbers(vector<int>& vec);
     };

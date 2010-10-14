@@ -14,17 +14,17 @@
 // 
 // =====================================================================================
 
-#include	"gui/magictable.h"
 #include	<QApplication>
+#include	"gui/magictable.h"
+
 
 using namespace std;
 
 int main(int argc, char* argv[])
 {
     QApplication app(argc, argv);
-    Oi::MagicTable table;
-
-    table.show();
+    Oi::MagicTable* magic = new Oi::MagicTable;
+    magic->show();
 
     return app.exec();
 }
