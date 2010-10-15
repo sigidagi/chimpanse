@@ -15,7 +15,8 @@
 // =====================================================================================
 
 
-#include	"magictable.h"
+#include	"magicwindow.h"
+#include	"preferences.h"
 #include	"core/core.h"
 #include	<vector>
 #include	<QMessageBox>
@@ -27,32 +28,47 @@ using std::vector;
 
 namespace Oi
 {
-    MagicTable::MagicTable(QWidget* parent) : QDialog(parent)
+    MagicWindow::MagicWindow(QWidget* parent) : QMainWindow(parent)
     {
         setupUi(this);
+    
+        connect(actionNew, SIGNAL(triggered()), this, SLOT(newSession()));
+        connect(actionExit, SIGNAL(triggered()), this, SLOT(close()));
+        connect(actionPreferences, SIGNAL(triggered()), this, SLOT(preferences()));
+        connect(actionHelp, SIGNAL(triggered()), this, SLOT(help()));
+        connect(actionAbout,SIGNAL(triggered()), this, SLOT(about()));
 
-        core = new Core;
-        core->setLength(6);
+        core_ = new Core;
+        preferences_ = new Preferences(this);
+        preferences_->setModal(true);
         
-        reset();
+        // once length is set(changed) it needs to reset numbers and 
+        // generate new ones at specific length. 
+        setLength(6);
     }
     
-    MagicTable::~MagicTable()
+    MagicWindow::~MagicWindow()
     {
-        if (core)
+        if (core_)
         {
-            delete core;
-            core = 0;
+            delete core_;
+            core_ = 0;
         }
     }
+    
+    void MagicWindow::setLength(int value)
+    {
+        core_->setLength(value);
+        reset();
+    }
 
-    void MagicTable::update()
+    void MagicWindow::update()
     {
         if (buttons_.empty())
             return;
         
         // if it is first update then loop through PushButtons and clear text
-        if ((int)buttons_.size() == core->getLength())
+        if ((int)buttons_.size() == core_->getLength())
         {
             foreach(QPushButton* but, buttons_)
                 but->setText("");
@@ -87,7 +103,7 @@ namespace Oi
  *    };
  */
 
-    void MagicTable::reset()
+    void MagicWindow::reset()
     {
         const QObjectList objects  = container->children();
         
@@ -104,10 +120,10 @@ namespace Oi
         }
 
         buttons_.clear();
-        core->start();
+        core_->start();
 
         vector<int> numbers;
-        core->getNumbers(numbers);
+        core_->getNumbers(numbers);
         
         for (size_t i = 0; i < numbers.size(); ++i)
         {
@@ -136,16 +152,38 @@ namespace Oi
 
     }
 
-    void MagicTable::message(const QString& message)
+    void MagicWindow::message(const QString& message)
     {
             QMessageBox box;
             box.setText(message);
             box.exec();
     }
 
-    void MagicTable::on_field1_clicked()
+    // On Action
+
+    void MagicWindow::newSession()
     {
-        if (!core->tap(1))             
+        reset();
+    }
+    
+    void MagicWindow::preferences()
+    {
+        preferences_->show();
+    }
+
+    void MagicWindow::help()
+    {
+
+    }
+
+    void MagicWindow::about()
+    {
+
+    }
+
+    void MagicWindow::on_field1_clicked()
+    {
+        if (!core_->tap(1))             
         {
             message("Incorrect quess! Try again.");            
             reset();
@@ -154,45 +192,9 @@ namespace Oi
 
         update();                
     }
-    void MagicTable::on_field2_clicked()
+    void MagicWindow::on_field2_clicked()
     {
-        if (!core->tap(2))             
-        {
-            message("Incorrect quess! Try again.");            
-            reset();
-            return;
-        }
-
-        update();                
-
-    }
-    void MagicTable::on_field3_clicked()
-    {
-        if (!core->tap(3))             
-        {
-            message("Incorrect quess! Try again.");            
-            reset();
-            return;
-        }
-
-        update();                
-
-    }
-    void MagicTable::on_field4_clicked()
-    {
-        if (!core->tap(4))             
-        {
-            message("Incorrect quess! Try again.");            
-            reset();
-            return;
-        }
-
-        update();                
-
-    }
-    void MagicTable::on_field5_clicked()
-    {
-        if (!core->tap(5))             
+        if (!core_->tap(2))             
         {
             message("Incorrect quess! Try again.");            
             reset();
@@ -202,9 +204,9 @@ namespace Oi
         update();                
 
     }
-    void MagicTable::on_field6_clicked()
+    void MagicWindow::on_field3_clicked()
     {
-        if (!core->tap(6))             
+        if (!core_->tap(3))             
         {
             message("Incorrect quess! Try again.");            
             reset();
@@ -214,9 +216,9 @@ namespace Oi
         update();                
 
     }
-    void MagicTable::on_field7_clicked()
+    void MagicWindow::on_field4_clicked()
     {
-        if (!core->tap(7))             
+        if (!core_->tap(4))             
         {
             message("Incorrect quess! Try again.");            
             reset();
@@ -226,9 +228,9 @@ namespace Oi
         update();                
 
     }
-    void MagicTable::on_field8_clicked()
+    void MagicWindow::on_field5_clicked()
     {
-        if (!core->tap(8))             
+        if (!core_->tap(5))             
         {
             message("Incorrect quess! Try again.");            
             reset();
@@ -238,9 +240,9 @@ namespace Oi
         update();                
 
     }
-    void MagicTable::on_field9_clicked()
+    void MagicWindow::on_field6_clicked()
     {
-        if (!core->tap(9))             
+        if (!core_->tap(6))             
         {
             message("Incorrect quess! Try again.");            
             reset();
@@ -250,9 +252,9 @@ namespace Oi
         update();                
 
     }
-    void MagicTable::on_field10_clicked()
+    void MagicWindow::on_field7_clicked()
     {
-        if (!core->tap(10))             
+        if (!core_->tap(7))             
         {
             message("Incorrect quess! Try again.");            
             reset();
@@ -262,9 +264,9 @@ namespace Oi
         update();                
 
     }
-    void MagicTable::on_field11_clicked()
+    void MagicWindow::on_field8_clicked()
     {
-        if (!core->tap(11))             
+        if (!core_->tap(8))             
         {
             message("Incorrect quess! Try again.");            
             reset();
@@ -274,9 +276,9 @@ namespace Oi
         update();                
 
     }
-    void MagicTable::on_field12_clicked()
+    void MagicWindow::on_field9_clicked()
     {
-        if (!core->tap(12))             
+        if (!core_->tap(9))             
         {
             message("Incorrect quess! Try again.");            
             reset();
@@ -286,9 +288,9 @@ namespace Oi
         update();                
 
     }
-    void MagicTable::on_field13_clicked()
+    void MagicWindow::on_field10_clicked()
     {
-        if (!core->tap(13))             
+        if (!core_->tap(10))             
         {
             message("Incorrect quess! Try again.");            
             reset();
@@ -298,9 +300,9 @@ namespace Oi
         update();                
 
     }
-    void MagicTable::on_field14_clicked()
+    void MagicWindow::on_field11_clicked()
     {
-        if (!core->tap(14))             
+        if (!core_->tap(11))             
         {
             message("Incorrect quess! Try again.");            
             reset();
@@ -310,9 +312,9 @@ namespace Oi
         update();                
 
     }
-    void MagicTable::on_field15_clicked()
+    void MagicWindow::on_field12_clicked()
     {
-        if (!core->tap(15))             
+        if (!core_->tap(12))             
         {
             message("Incorrect quess! Try again.");            
             reset();
@@ -322,9 +324,9 @@ namespace Oi
         update();                
 
     }
-    void MagicTable::on_field16_clicked()
+    void MagicWindow::on_field13_clicked()
     {
-        if (!core->tap(16))             
+        if (!core_->tap(13))             
         {
             message("Incorrect quess! Try again.");            
             reset();
@@ -334,9 +336,9 @@ namespace Oi
         update();                
 
     }
-    void MagicTable::on_field17_clicked()
+    void MagicWindow::on_field14_clicked()
     {
-        if (!core->tap(17))             
+        if (!core_->tap(14))             
         {
             message("Incorrect quess! Try again.");            
             reset();
@@ -346,9 +348,9 @@ namespace Oi
         update();                
 
     }
-    void MagicTable::on_field18_clicked()
+    void MagicWindow::on_field15_clicked()
     {
-        if (!core->tap(18))             
+        if (!core_->tap(15))             
         {
             message("Incorrect quess! Try again.");            
             reset();
@@ -358,9 +360,9 @@ namespace Oi
         update();                
 
     }
-    void MagicTable::on_field19_clicked()
+    void MagicWindow::on_field16_clicked()
     {
-        if (!core->tap(19))             
+        if (!core_->tap(16))             
         {
             message("Incorrect quess! Try again.");            
             reset();
@@ -370,9 +372,9 @@ namespace Oi
         update();                
 
     }
-    void MagicTable::on_field20_clicked()
+    void MagicWindow::on_field17_clicked()
     {
-        if (!core->tap(20))             
+        if (!core_->tap(17))             
         {
             message("Incorrect quess! Try again.");            
             reset();
@@ -382,9 +384,9 @@ namespace Oi
         update();                
 
     }
-    void MagicTable::on_field21_clicked()
+    void MagicWindow::on_field18_clicked()
     {
-        if (!core->tap(21))             
+        if (!core_->tap(18))             
         {
             message("Incorrect quess! Try again.");            
             reset();
@@ -394,9 +396,9 @@ namespace Oi
         update();                
 
     }
-    void MagicTable::on_field22_clicked()
+    void MagicWindow::on_field19_clicked()
     {
-        if (!core->tap(22))             
+        if (!core_->tap(19))             
         {
             message("Incorrect quess! Try again.");            
             reset();
@@ -406,9 +408,9 @@ namespace Oi
         update();                
 
     }
-    void MagicTable::on_field23_clicked()
+    void MagicWindow::on_field20_clicked()
     {
-        if (!core->tap(23))             
+        if (!core_->tap(20))             
         {
             message("Incorrect quess! Try again.");            
             reset();
@@ -418,9 +420,9 @@ namespace Oi
         update();                
 
     }
-    void MagicTable::on_field24_clicked()
+    void MagicWindow::on_field21_clicked()
     {
-        if (!core->tap(24))             
+        if (!core_->tap(21))             
         {
             message("Incorrect quess! Try again.");            
             reset();
@@ -430,9 +432,9 @@ namespace Oi
         update();                
 
     }
-    void MagicTable::on_field25_clicked()
+    void MagicWindow::on_field22_clicked()
     {
-        if (!core->tap(25))             
+        if (!core_->tap(22))             
         {
             message("Incorrect quess! Try again.");            
             reset();
@@ -442,9 +444,9 @@ namespace Oi
         update();                
 
     }
-    void MagicTable::on_field26_clicked()
+    void MagicWindow::on_field23_clicked()
     {
-        if (!core->tap(26))             
+        if (!core_->tap(23))             
         {
             message("Incorrect quess! Try again.");            
             reset();
@@ -454,9 +456,9 @@ namespace Oi
         update();                
 
     }
-    void MagicTable::on_field27_clicked()
+    void MagicWindow::on_field24_clicked()
     {
-        if (!core->tap(27))             
+        if (!core_->tap(24))             
         {
             message("Incorrect quess! Try again.");            
             reset();
@@ -466,9 +468,9 @@ namespace Oi
         update();                
 
     }
-    void MagicTable::on_field28_clicked()
+    void MagicWindow::on_field25_clicked()
     {
-        if (!core->tap(28))             
+        if (!core_->tap(25))             
         {
             message("Incorrect quess! Try again.");            
             reset();
@@ -478,9 +480,9 @@ namespace Oi
         update();                
 
     }
-    void MagicTable::on_field29_clicked()
+    void MagicWindow::on_field26_clicked()
     {
-        if (!core->tap(29))             
+        if (!core_->tap(26))             
         {
             message("Incorrect quess! Try again.");            
             reset();
@@ -490,9 +492,9 @@ namespace Oi
         update();                
 
     }
-    void MagicTable::on_field30_clicked()
+    void MagicWindow::on_field27_clicked()
     {
-        if (!core->tap(30))             
+        if (!core_->tap(27))             
         {
             message("Incorrect quess! Try again.");            
             reset();
@@ -502,9 +504,9 @@ namespace Oi
         update();                
 
     }
-    void MagicTable::on_field31_clicked()
+    void MagicWindow::on_field28_clicked()
     {
-        if (!core->tap(31))             
+        if (!core_->tap(28))             
         {
             message("Incorrect quess! Try again.");            
             reset();
@@ -514,9 +516,9 @@ namespace Oi
         update();                
 
     }
-    void MagicTable::on_field32_clicked()
+    void MagicWindow::on_field29_clicked()
     {
-        if (!core->tap(32))             
+        if (!core_->tap(29))             
         {
             message("Incorrect quess! Try again.");            
             reset();
@@ -526,9 +528,9 @@ namespace Oi
         update();                
 
     }
-    void MagicTable::on_field33_clicked()
+    void MagicWindow::on_field30_clicked()
     {
-        if (!core->tap(33))             
+        if (!core_->tap(30))             
         {
             message("Incorrect quess! Try again.");            
             reset();
@@ -538,9 +540,9 @@ namespace Oi
         update();                
 
     }
-    void MagicTable::on_field34_clicked()
+    void MagicWindow::on_field31_clicked()
     {
-        if (!core->tap(34))             
+        if (!core_->tap(31))             
         {
             message("Incorrect quess! Try again.");            
             reset();
@@ -550,9 +552,9 @@ namespace Oi
         update();                
 
     }
-    void MagicTable::on_field35_clicked()
+    void MagicWindow::on_field32_clicked()
     {
-        if (!core->tap(35))             
+        if (!core_->tap(32))             
         {
             message("Incorrect quess! Try again.");            
             reset();
@@ -562,9 +564,45 @@ namespace Oi
         update();                
 
     }
-    void MagicTable::on_field36_clicked()
+    void MagicWindow::on_field33_clicked()
     {
-        if (!core->tap(36))             
+        if (!core_->tap(33))             
+        {
+            message("Incorrect quess! Try again.");            
+            reset();
+            return;
+        }
+
+        update();                
+
+    }
+    void MagicWindow::on_field34_clicked()
+    {
+        if (!core_->tap(34))             
+        {
+            message("Incorrect quess! Try again.");            
+            reset();
+            return;
+        }
+
+        update();                
+
+    }
+    void MagicWindow::on_field35_clicked()
+    {
+        if (!core_->tap(35))             
+        {
+            message("Incorrect quess! Try again.");            
+            reset();
+            return;
+        }
+
+        update();                
+
+    }
+    void MagicWindow::on_field36_clicked()
+    {
+        if (!core_->tap(36))             
         {
             message("Incorrect quess! Try again.");            
             reset();

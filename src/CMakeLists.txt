@@ -8,10 +8,8 @@ SET(CMAKE_CXX_FLAGS "-g -Wall ")
 #SET(CMAKE_CXX_FLAGS "-std=c++0x")
 
 FILE(GLOB CHIMP_SOURCE_CXX main.cpp core/*.cpp gui/*.cpp)
-#FILE(GLOB folder_header core/*.h)
-
-SET(CHIMP_UI gui/magictable.ui)
-SET(CHIMP_MOC gui/magictable.h)
+FILE(GLOB CHIMP_UI gui/*.ui)
+FILE(GLOB CHIMP_MOC gui/*.h)
 
 QT4_WRAP_UI(CHIMP_SOURCE_CXX ${CHIMP_UI})
 QT4_WRAP_CPP(CHIMP_SOURCE_CXX ${CHIMP_MOC})

@@ -16,7 +16,7 @@
 #ifndef  MAGICTABLE_INC
 #define  MAGICTABLE_INC
 
-#include	"ui_magictable.h"
+#include	"ui_magicwindow.h"
 #include	<vector>
 
 using std::vector;
@@ -25,24 +25,32 @@ using std::vector;
 namespace Oi
 {
     class Core;
+    class Preferences;
 
-    class MagicTable : public QDialog, public Ui::MagicTable
+    class MagicWindow : public QMainWindow, public Ui::MagicWindow
     {
         Q_OBJECT
 
         private:
-            //Ui::MagicTable ui;
-            Core* core;
+            //Ui::MagicWindow ui;
+            Core* core_;
+            Preferences* preferences_;
             vector<QPushButton*> buttons_; 
 
         public:
-            MagicTable(QWidget* parent = 0);
-            ~MagicTable();
+            MagicWindow(QWidget* parent = 0);
+            ~MagicWindow();
+            void setLength(int value);
             void reset();
             void update();
             void message(const QString& message);
 
         private slots:
+            void newSession();
+            void preferences();
+            void help();
+            void about();
+
             void on_field1_clicked();
             void on_field2_clicked();
             void on_field3_clicked();

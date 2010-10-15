@@ -32,11 +32,11 @@ namespace Oi
     
     void Core::setLength(unsigned int length)
     {
-        if (length >= (unsigned int)vec_.size() )
+        if (length > SIZE )
             return;
         
         length_ = length;
-        vec_.erase(vec_.begin() + length, vec_.end());
+        start();
     }
 
     int Core::getLength()

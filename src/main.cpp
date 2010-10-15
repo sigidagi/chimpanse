@@ -15,7 +15,7 @@
 // =====================================================================================
 
 #include	<QApplication>
-#include	"gui/magictable.h"
+#include	"gui/magicwindow.h"
 
 
 using namespace std;
@@ -23,7 +23,8 @@ using namespace std;
 int main(int argc, char* argv[])
 {
     QApplication app(argc, argv);
-    Oi::MagicTable* magic = new Oi::MagicTable;
+//    app.setStyle("cde");
+    Oi::MagicWindow* magic = new Oi::MagicWindow;
     magic->show();
 
     return app.exec();
