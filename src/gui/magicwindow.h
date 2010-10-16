@@ -35,7 +35,8 @@ namespace Oi
             //Ui::MagicWindow ui;
             Core* core_;
             Preferences* preferences_;
-            vector<QPushButton*> buttons_; 
+            QButtonGroup* grNumbers_;
+//            vector<QPushButton*> buttons_; 
 
         public:
             MagicWindow(QWidget* parent = 0);
@@ -47,46 +48,10 @@ namespace Oi
 
         private slots:
             void newSession();
-            void preferences();
             void help();
             void about();
+            void fieldClicked(QAbstractButton* button);
 
-            void on_field1_clicked();
-            void on_field2_clicked();
-            void on_field3_clicked();
-            void on_field4_clicked();
-            void on_field5_clicked();
-            void on_field6_clicked();
-            void on_field7_clicked();
-            void on_field8_clicked();
-            void on_field9_clicked();
-            void on_field10_clicked();
-            void on_field11_clicked();
-            void on_field12_clicked();
-            void on_field13_clicked();
-            void on_field14_clicked();
-            void on_field15_clicked();
-            void on_field16_clicked();
-            void on_field17_clicked();
-            void on_field18_clicked();
-            void on_field19_clicked();
-            void on_field20_clicked();
-            void on_field21_clicked();
-            void on_field22_clicked();
-            void on_field23_clicked();
-            void on_field24_clicked();
-            void on_field25_clicked();
-            void on_field26_clicked();
-            void on_field27_clicked();
-            void on_field28_clicked();
-            void on_field29_clicked();
-            void on_field30_clicked();
-            void on_field31_clicked();
-            void on_field32_clicked();
-            void on_field33_clicked();
-            void on_field34_clicked();
-            void on_field35_clicked();
-            void on_field36_clicked();
     };
     
 } // namespace Oi

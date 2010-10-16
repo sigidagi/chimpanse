@@ -35,7 +35,7 @@ namespace Oi
             void setLength(unsigned int size);
             int  getLength();
             bool tap(unsigned int number);
-            void getNumbers(vector<int>& vec);
+            vector<int> getNumbers();
     };
 
 } //namespace

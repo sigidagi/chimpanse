@@ -44,6 +44,7 @@ namespace Oi
         return length_;
     }
     
+
     void Core::start()
     {
         const int* array = Oi::Random<int, SIZE>::shuffle();
@@ -78,10 +79,9 @@ namespace Oi
         return false;
     }
     
-    void Core::getNumbers(std::vector<int>& vec)
+    vector<int> Core::getNumbers()
     {
-        vec.resize(vec_.size());
-        std::copy(vec_.begin(), vec_.end(), vec.begin());
+        return vec_;
     }
 
 } // namespace Oi
