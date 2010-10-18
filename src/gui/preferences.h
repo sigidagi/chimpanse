@@ -33,12 +33,17 @@ namespace Oi
         QButtonGroup* groupTime;
         QButtonGroup* groupLength;
 
-        public:
-            Preferences(QWidget* parent = 0);
-
+        // private mathods
+        private:
             void changedTime();
             void changedLength();
-        
+ 
+        public:
+            Preferences(QWidget* parent = 0);
+            
+            int getTime();
+            int getLength();
+             
         private slots:
             void accept();
     };

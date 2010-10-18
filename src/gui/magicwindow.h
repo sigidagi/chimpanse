@@ -42,14 +42,15 @@ namespace Oi
             MagicWindow(QWidget* parent = 0);
             ~MagicWindow();
             void setLength(int value);
+            void setTime(int value);
             void reset();
-            void update();
             void message(const QString& message);
 
         private slots:
             void newSession();
             void help();
             void about();
+            void clearText();
             void fieldClicked(QAbstractButton* button);
 
     };

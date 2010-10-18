@@ -41,43 +41,23 @@ namespace Oi
         groupLength->addButton(len7);
         groupLength->addButton(len8);
         groupLength->addButton(len9);
-
+    
+        len6->setChecked(true);
+        sec5->setChecked(true);
+        
         connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
         connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
 
     }
 
+
     void Preferences::changedTime()
     {
-/*
- *        QObjectList objects = grTime->children();  
- *        
- *        QString number; 
- *
- *        foreach(QObject* object, objects)
- *        {
- *            QRadioButton* button = qobject_cast<QRadioButton*>(object);
- *            if (!button)
- *                continue;
- *
- *            if (!button->isChecked())
- *                continue;
- *
- *            number = button->text();
- *            button->setChecked(true);
- *            break;
- *        }
- */
-        
-        
-        
-        /*
-         *if (!number.isEmpty())
-         *{
-         *    magic_->setLength(number.toInt());
-         *}
-         */
-
+        if ( grTime->isChecked())
+        {
+            QAbstractButton* button = groupTime->checkedButton();
+            magic_->setTime( button->text().toInt() );
+        }
     }
 
     void Preferences::changedLength()
@@ -92,6 +72,20 @@ namespace Oi
         changedLength();
         this->close();
     }
+    
+    int Preferences::getTime()
+    {
+        if (!grTime->isChecked())
+             return -1;
+        
+        QAbstractButton* button = groupTime->checkedButton();
+        return button->text().toInt();
+    }
 
+    int Preferences::getLength()
+    {
+        QAbstractButton* button = groupLength->checkedButton();
+        return button->text().toInt();
+    }
 
 } // namespace Oi

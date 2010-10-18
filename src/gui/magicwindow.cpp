@@ -20,6 +20,7 @@
 #include	"core/core.h"
 #include	<vector>
 #include	<QMessageBox>
+#include	<QTimer>
 #include	<functional>
 #include	<algorithm>
 
@@ -76,7 +77,12 @@ namespace Oi
         reset();
     }
 
-    void MagicWindow::update()
+    void MagicWindow::setTime(int value)
+    {
+        QTimer::singleShot(1000*value, this, SLOT(clearText()));                 
+    }
+    
+    void MagicWindow::clearText()
     {
         QList<QAbstractButton*> buttons = grNumbers_->buttons();
          
@@ -84,24 +90,6 @@ namespace Oi
             but->setText("");
 
     }
-
-/*
- *    struct ObjectName : public std::binary_function<QObject, QString, bool>
- *    {
- *        bool operator()(const QObject* object, const QString& name) const
- *        {
- *            const QPushButton* button = qobject_cast<QPushButton*>(object);
- *            if (!button)
- *                return false;
- *
- *            if (button->objectName() != name)
- *                return false; 
- *
- *            return true;
- *
- *        }
- *    };
- */
 
     void MagicWindow::reset()
     {
@@ -164,12 +152,12 @@ namespace Oi
        
         // if this is the first button clear numbers!
         if (text == "1")
-            update();
+            clearText();
 
         QPushButton* push = qobject_cast<QPushButton*>(button);
         push->setFlat(true);
 
-        if (core_->getNumbers().empty())
+        if (core_->isLast())
         {
             message("Correct! Congratulations!");
             reset();
@@ -178,6 +166,11 @@ namespace Oi
     
     void MagicWindow::newSession()
     {
+        setLength(preferences_->getLength());
+        int time = preferences_->getTime();
+        if (time != -1)
+            setTime(time);
+
         reset();
     }
     

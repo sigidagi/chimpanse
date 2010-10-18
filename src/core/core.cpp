@@ -28,20 +28,23 @@ namespace Oi
     Core::Core()
     {
         vec_.resize(SIZE);
+        end_ = vec_.end();
     }
     
     void Core::setLength(unsigned int length)
     {
         if (length > SIZE )
             return;
-        
-        length_ = length;
+       
+        end_ = vec_.begin() + length;
+       
         start();
     }
 
     int Core::getLength()
     {
-        return length_;
+        int len = (int)(end_ - vec_.begin());
+        return len; 
     }
     
 
@@ -49,28 +52,27 @@ namespace Oi
     {
         const int* array = Oi::Random<int, SIZE>::shuffle();
         vec_.clear();
-        vec_.resize(length_);
-        std::copy(array, array+length_, vec_.begin());
+        vec_.resize(SIZE);
+        std::copy(array, array+SIZE, vec_.begin());
+        pos_ = vec_.begin();
     }
 
     bool Core::tap(unsigned int number)
     {
-        std::vector<int>::iterator it;
-        it = std::find(vec_.begin(), vec_.end(), number);
+        std::vector<int>::const_iterator it;
+        it = std::find(vec_.begin(), end_, number);
         // if such number exist in a vector then it has to be first
         // otherwise wrong number was taped!
-        if (it != vec_.end())
+        if (it != end_)
         {
-            // corect guess - delete then first in the vector!
-            if (number == (unsigned int)vec_[0])
+            if (number == (unsigned int)*pos_)
             {
-                vec_.erase(vec_.begin());
+                ++pos_;
                 return true;
             }
-            // clear vector - session is over!
             else
             {
-                vec_.clear();
+                pos_ = end_;
                 return false;
             }
         }
@@ -78,10 +80,21 @@ namespace Oi
         // it was tapped accedent field - do nothing with vector. 
         return false;
     }
+
+    bool Core::isLast()
+    {
+        if (pos_ == end_)
+            return true;
+        
+        return false;
+    }
     
     vector<int> Core::getNumbers()
     {
-        return vec_;
+        int size = (end_ - pos_); 
+        vector<int> numbers(size);
+        std::copy(pos_, end_, numbers.begin());
+        return numbers;
     }
 
 } // namespace Oi

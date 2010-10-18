@@ -28,13 +28,17 @@ namespace Oi
     {
         private:
             vector<int> vec_;
-            int length_;
+            vector<int>::iterator end_;
+            vector<int>::iterator pos_;
+
         public:
             Core();
             void start();
             void setLength(unsigned int size);
             int  getLength();
+            
             bool tap(unsigned int number);
+            bool isLast();
             vector<int> getNumbers();
     };
 
