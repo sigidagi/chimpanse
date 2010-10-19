@@ -28,7 +28,7 @@ namespace Oi
     Core::Core()
     {
         vec_.resize(SIZE);
-        end_ = vec_.end();
+        length_ = SIZE;
     }
     
     void Core::setLength(unsigned int length)
@@ -36,15 +36,14 @@ namespace Oi
         if (length > SIZE )
             return;
        
-        end_ = vec_.begin() + length;
+        length_ = length;
        
         start();
     }
 
     int Core::getLength()
     {
-        int len = (int)(end_ - vec_.begin());
-        return len; 
+        return length_; 
     }
     
 
@@ -60,10 +59,10 @@ namespace Oi
     bool Core::tap(unsigned int number)
     {
         std::vector<int>::const_iterator it;
-        it = std::find(vec_.begin(), end_, number);
+        it = std::find(vec_.begin(), vec_.begin()+length_, number);
         // if such number exist in a vector then it has to be first
         // otherwise wrong number was taped!
-        if (it != end_)
+        if (it != vec_.begin()+length_)
         {
             if (number == (unsigned int)*pos_)
             {
@@ -72,7 +71,7 @@ namespace Oi
             }
             else
             {
-                pos_ = end_;
+                pos_ = vec_.begin()+length_;
                 return false;
             }
         }
@@ -83,7 +82,7 @@ namespace Oi
 
     bool Core::isLast()
     {
-        if (pos_ == end_)
+        if (pos_ == vec_.begin()+length_)
             return true;
         
         return false;
@@ -91,10 +90,15 @@ namespace Oi
     
     vector<int> Core::getNumbers()
     {
-        int size = (end_ - pos_); 
-        vector<int> numbers(size);
-        std::copy(pos_, end_, numbers.begin());
+        vector<int> numbers;
+        if (pos_ >= vec_.begin()+length_)
+            return numbers;
+        
+        int size = vec_.begin()+length_ - pos_;
+        numbers.resize(size);
+        std::copy(pos_, vec_.begin()+length_, numbers.begin());
         return numbers;
+
     }
 
 } // namespace Oi

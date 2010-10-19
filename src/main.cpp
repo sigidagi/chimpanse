@@ -20,9 +20,13 @@
 
 using namespace std;
 
+#if defined(_MSC_VER)
+int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, char*, int nShowCmd)
+#else
 int main(int argc, char* argv[])
+#endif
 {
-    QApplication app(argc, argv);
+    QApplication app(0, 0);
 //    app.setStyle("cde");
     Oi::MagicWindow* magic = new Oi::MagicWindow;
     magic->show();

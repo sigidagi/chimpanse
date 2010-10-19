@@ -28,7 +28,7 @@ namespace Oi
     {
         private:
             vector<int> vec_;
-            vector<int>::iterator end_;
+            int length_;
             vector<int>::iterator pos_;
 
         public:
