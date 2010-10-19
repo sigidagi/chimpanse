@@ -146,7 +146,7 @@ namespace Oi
         if (!core_->tap(name.remove("field").toInt()))             
         {
             message("Incorrect quess! Try again.");            
-            reset();
+            newSession();
             return;
         }
        
@@ -160,7 +160,7 @@ namespace Oi
         if (core_->isLast())
         {
             message("Correct! Congratulations!");
-            reset();
+            newSession();
         }
     }
     
