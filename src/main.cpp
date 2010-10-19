@@ -26,7 +26,8 @@ int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, char*, int nShowCmd)
 int main(int argc, char* argv[])
 #endif
 {
-    QApplication app(0, 0);
+    int c = 0;
+    QApplication app(c, 0);
 //    app.setStyle("cde");
     Oi::MagicWindow* magic = new Oi::MagicWindow;
     magic->show();
