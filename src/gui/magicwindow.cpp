@@ -32,7 +32,9 @@ namespace Oi
     MagicWindow::MagicWindow(QWidget* parent) : QMainWindow(parent)
     {
         setupUi(this);
-   
+        
+        setWindowIcon(QIcon(":/images/chimp.gif"));
+
         grNumbers_ = new QButtonGroup;        
         const QObjectList objects = container->children();
         
@@ -181,7 +183,15 @@ namespace Oi
 
     void MagicWindow::about()
     {
-
+        QMessageBox::about(this, tr("About Chimpanse"),
+            tr("<h2> Chimpanse 1.0</h2>"
+               "<p>Copyright &copy; 2010 OiGroup."
+               "<p>Chimpanse is a small game program. Playing \"Chimpanse\" "
+               "will improve your photographic memory skills. "
+               "Ayumu, a seven-year-old chimpanse male is a world chimpion " 
+               "in such memory competition. "
+               "<p> More about it: "
+               "<a href=\"http://news.bbc.co.uk/2/hi/7124156.stm\">BBS News article</a> "));
     }
 
 

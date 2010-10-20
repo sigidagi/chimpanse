@@ -36,7 +36,6 @@ namespace Oi
             Core* core_;
             Preferences* preferences_;
             QButtonGroup* grNumbers_;
-//            vector<QPushButton*> buttons_; 
 
         public:
             MagicWindow(QWidget* parent = 0);

@@ -15,6 +15,7 @@
 // =====================================================================================
 
 #include	<QApplication>
+#include	<QSplashScreen>
 #include	"gui/magicwindow.h"
 
 
@@ -28,9 +29,17 @@ int main(int argc, char* argv[])
 {
     int c = 0;
     QApplication app(c, 0);
-//    app.setStyle("cde");
+
+    QSplashScreen* splash = new QSplashScreen;
+    splash->setPixmap(QPixmap(":/images/chimp.png"));
+    splash->show();
+    
+
     Oi::MagicWindow* magic = new Oi::MagicWindow;
     magic->show();
+    
+    splash->finish(magic);
+    delete splash;
 
     return app.exec();
 }
