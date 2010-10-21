@@ -21,6 +21,7 @@
 
 using std::vector;
 
+class QLabel;
 
 namespace Oi
 {
@@ -34,8 +35,12 @@ namespace Oi
         private:
             //Ui::MagicWindow ui;
             Core* core_;
+            QTimer* countTimer_;
+            QLabel* statusLabel_;
+            QLabel* secondsLabel_;
             Preferences* preferences_;
             QButtonGroup* grNumbers_;
+            int timeLeft_;
 
         public:
             MagicWindow(QWidget* parent = 0);
@@ -44,12 +49,13 @@ namespace Oi
             void setTime(int value);
             void reset();
             void message(const QString& message);
+            void clearText();
 
         private slots:
             void newSession();
             void help();
             void about();
-            void clearText();
+            void countDown();
             void fieldClicked(QAbstractButton* button);
 
     };

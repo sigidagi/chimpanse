@@ -58,6 +58,8 @@ namespace Oi
             QAbstractButton* button = groupTime->checkedButton();
             magic_->setTime( button->text().toInt() );
         }
+        else
+            magic_->setTime(-1);
     }
 
     void Preferences::changedLength()

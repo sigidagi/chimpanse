@@ -21,6 +21,7 @@
 #include	<vector>
 #include	<QMessageBox>
 #include	<QTimer>
+#include	<QLabel>
 #include	<functional>
 #include	<algorithm>
 
@@ -47,18 +48,26 @@ namespace Oi
             grNumbers_->addButton(button); 
         }
 
-        preferences_ = new Preferences(this);
-        preferences_->setModal(true);
-        
+       
         connect(actionNew, SIGNAL(triggered()), this, SLOT(newSession()));
         connect(actionExit, SIGNAL(triggered()), this, SLOT(close()));
-        connect(actionPreferences, SIGNAL(triggered()), preferences_, SLOT(show()));
         connect(actionHelp, SIGNAL(triggered()), this, SLOT(help()));
         connect(actionAbout,SIGNAL(triggered()), this, SLOT(about()));
         connect(grNumbers_, SIGNAL(buttonClicked(QAbstractButton*)), this, SLOT(fieldClicked(QAbstractButton*))); 
-
-        core_ = new Core;
         
+        preferences_ = new Preferences(this);
+        preferences_->setModal(true);
+        connect(actionPreferences, SIGNAL(triggered()), preferences_, SLOT(show()));
+
+        countTimer_ = new QTimer(this);
+        connect(countTimer_, SIGNAL(timeout()), this, SLOT(countDown()));
+
+        statusLabel_ = new QLabel("Unlimited time");         
+        secondsLabel_ = new QLabel;
+        this->statusBar()->addWidget(statusLabel_);
+        this->statusBar()->addWidget(secondsLabel_, 1);
+        
+        core_ = new Core;
         // once length is set(changed) it needs to reset numbers and 
         // generate new ones at specific length. 
         setLength(6);
@@ -81,16 +90,45 @@ namespace Oi
 
     void MagicWindow::setTime(int value)
     {
-        QTimer::singleShot(1000*value, this, SLOT(clearText()));                 
+        if (value == -1)
+        {
+            statusLabel_->setText("Unlimited time");
+            secondsLabel_->setText("");
+            timeLeft_ = -1;
+            return;
+        }
+
+        timeLeft_ = value;
+        QString sec;
+        statusLabel_->setText("Time left:");
+        secondsLabel_->setText(sec.setNum(value));
+        countTimer_->start(1000);
     }
-    
+   
+    void MagicWindow::countDown()
+    {
+        --timeLeft_;
+        statusLabel_->setText("Time left:");
+       
+       QString sec;
+       if (timeLeft_ == 0)
+        {
+            countTimer_->stop();       
+            secondsLabel_->setText(sec.setNum(0));
+            clearText();
+            return;
+        }
+
+        // send message to status bar - how much time left.
+        secondsLabel_->setText(sec.setNum(timeLeft_)); 
+    }
+
     void MagicWindow::clearText()
     {
         QList<QAbstractButton*> buttons = grNumbers_->buttons();
          
         foreach(QAbstractButton* but, buttons)
             but->setText("");
-
     }
 
     void MagicWindow::reset()
@@ -171,7 +209,16 @@ namespace Oi
         setLength(preferences_->getLength());
         int time = preferences_->getTime();
         if (time != -1)
+        {
+            // set time in seconds. after time is expaired: program
+            // clears all fileds with numbers.
             setTime(time);
+        }
+        else
+        {
+            statusLabel_->setText("Unlimited time");
+            secondsLabel_->setText("");
+        }
 
         reset();
     }
