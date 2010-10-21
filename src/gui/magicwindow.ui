@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Chimpanse - mind game</string>
   </property>
   <widget class="QWidget" name="container">
    <layout class="QGridLayout" name="gridLayout">
@@ -774,6 +774,10 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionNew">
+   <property name="icon">
+    <iconset resource="magicwindow.qrc">
+     <normaloff>:/images/refresh.svg</normaloff>:/images/refresh.svg</iconset>
+   </property>
    <property name="text">
     <string>&amp;New</string>
    </property>
@@ -785,6 +789,10 @@
    </property>
   </action>
   <action name="actionExit">
+   <property name="icon">
+    <iconset resource="magicwindow.qrc">
+     <normaloff>:/images/exit.svg</normaloff>:/images/exit.svg</iconset>
+   </property>
    <property name="text">
     <string>E&amp;xit</string>
    </property>
@@ -796,6 +804,10 @@
    </property>
   </action>
   <action name="actionHelp">
+   <property name="icon">
+    <iconset resource="magicwindow.qrc">
+     <normaloff>:/images/help.svg</normaloff>:/images/help.svg</iconset>
+   </property>
    <property name="text">
     <string>&amp;Help</string>
    </property>
@@ -807,6 +819,10 @@
    </property>
   </action>
   <action name="actionAbout">
+   <property name="icon">
+    <iconset resource="magicwindow.qrc">
+     <normaloff>:/images/star.svg</normaloff>:/images/star.svg</iconset>
+   </property>
    <property name="text">
     <string>&amp;About </string>
    </property>
@@ -818,6 +834,10 @@
    </property>
   </action>
   <action name="actionPreferences">
+   <property name="icon">
+    <iconset resource="magicwindow.qrc">
+     <normaloff>:/images/properties.svg</normaloff>:/images/properties.svg</iconset>
+   </property>
    <property name="text">
     <string>&amp;Preferences</string>
    </property>
@@ -829,6 +849,8 @@
    </property>
   </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="magicwindow.qrc"/>
+ </resources>
  <connections/>
 </ui>

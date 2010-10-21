@@ -35,7 +35,6 @@ namespace Oi
         setupUi(this);
         
         setWindowIcon(QIcon(":/images/chimp.gif"));
-
         grNumbers_ = new QButtonGroup;        
         const QObjectList objects = container->children();
         
@@ -225,16 +224,23 @@ namespace Oi
     
     void MagicWindow::help()
     {
-
+        QMessageBox::about(this, tr("How to play"),
+            tr("<h2>How to play</h2>"
+               "<p>The objective of <it>Chimpanse</it> is to click on numbers in right sequence. "
+               "Once you remeber positions of the numbers and start with number \"1\" - "
+               "other numbers will be hidden. So, use your memory - guess right! " 
+               "<p>Form preferences in menues, you can choose lenght of the sequence and(or) "
+               "time how long (in seconds) numbers will be shown."));
     }
 
     void MagicWindow::about()
     {
         QMessageBox::about(this, tr("About Chimpanse"),
             tr("<h2> Chimpanse 1.0</h2>"
-               "<p>Copyright &copy; 2010 OiGroup."
-               "<p>Chimpanse is a small game program. Playing \"Chimpanse\" "
+               "<p>Copyright &copy; 2010 sigidagi."
+               "<p>Chimpanse is a cognitive (mind) game. Playing <it>Chimpanse</it> "
                "will improve your photographic memory skills. "
+               "You will be suprised that "
                "Ayumu, a seven-year-old chimpanse male is a world chimpion " 
                "in such memory competition. "
                "<p> More about it: "

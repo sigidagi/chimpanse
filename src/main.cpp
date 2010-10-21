@@ -29,6 +29,7 @@ int main(int argc, char* argv[])
 {
     int c = 0;
     QApplication app(c, 0);
+//    app.setStyle("cde");
 
     QSplashScreen* splash = new QSplashScreen;
     splash->setPixmap(QPixmap(":/images/chimp.png"));
@@ -37,7 +38,7 @@ int main(int argc, char* argv[])
 
     Oi::MagicWindow* magic = new Oi::MagicWindow;
     magic->show();
-    
+
     splash->finish(magic);
     delete splash;
 

@@ -1,7 +1,12 @@
 <RCC>
-    <qresource>
-        <file>images/chimp.png</file>
-        <file>images/chimp.xpm</file>
-        <file>images/chimp.gif</file>
-    </qresource>
+  <qresource>
+    <file>images/exit.svg</file>
+    <file>images/refresh.svg</file>
+    <file>images/properties.svg</file>
+    <file>images/star.svg</file>
+    <file>images/help.svg</file>
+    <file>images/chimp.png</file>
+    <file>images/chimp.xpm</file>
+    <file>images/chimp.gif</file>
+  </qresource>
 </RCC>
