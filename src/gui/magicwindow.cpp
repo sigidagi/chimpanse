@@ -17,6 +17,7 @@
 
 #include	"magicwindow.h"
 #include	"preferences.h"
+#include	"popwindow.h"
 #include	"core/core.h"
 #include	<vector>
 #include	<QMessageBox>
@@ -34,7 +35,7 @@ namespace Oi
     {
         setupUi(this);
         
-        setWindowIcon(QIcon(":/images/chimp.gif"));
+        setWindowIcon(QIcon(":/images/chimpLogo.gif"));
         grNumbers_ = new QButtonGroup;        
         const QObjectList objects = container->children();
         
@@ -47,7 +48,6 @@ namespace Oi
             grNumbers_->addButton(button); 
         }
 
-       
         connect(actionNew, SIGNAL(triggered()), this, SLOT(newSession()));
         connect(actionExit, SIGNAL(triggered()), this, SLOT(close()));
         connect(actionHelp, SIGNAL(triggered()), this, SLOT(help()));
@@ -65,7 +65,9 @@ namespace Oi
         secondsLabel_ = new QLabel;
         this->statusBar()->addWidget(statusLabel_);
         this->statusBar()->addWidget(secondsLabel_, 1);
-        
+       
+        popWindow_ = new PopWindow;
+
         core_ = new Core;
         // once length is set(changed) it needs to reset numbers and 
         // generate new ones at specific length. 
@@ -167,11 +169,16 @@ namespace Oi
 
     }
 
-    void MagicWindow::message(const QString& message)
+    void MagicWindow::message(bool correct)
     {
-            QMessageBox box;
-            box.setText(message);
-            box.exec();
+
+        QLabel* imageLabel = popWindow_->getImage();
+        if (correct) 
+            imageLabel->setPixmap(QPixmap(":/images/happy.jpg"));
+        else
+            imageLabel->setPixmap(QPixmap(":/images/sad.jpg"));
+
+        popWindow_->show();
     }
 
     // On Action
@@ -184,7 +191,7 @@ namespace Oi
         // so from 6th position to the right there is a number of a field.
         if (!core_->tap(name.remove("field").toInt()))             
         {
-            message("Incorrect quess! Try again.");            
+            message(false);
             newSession();
             return;
         }
@@ -198,7 +205,7 @@ namespace Oi
 
         if (core_->isLast())
         {
-            message("Correct! Congratulations!");
+            message(true);
             newSession();
         }
     }

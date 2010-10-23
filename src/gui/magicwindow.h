@@ -22,11 +22,13 @@
 using std::vector;
 
 class QLabel;
+class QScrollArea;
 
 namespace Oi
 {
     class Core;
     class Preferences;
+    class PopWindow;
 
     class MagicWindow : public QMainWindow, public Ui::MagicWindow
     {
@@ -42,13 +44,16 @@ namespace Oi
             QButtonGroup* grNumbers_;
             int timeLeft_;
 
+            // to display image
+            PopWindow* popWindow_;
+                
         public:
             MagicWindow(QWidget* parent = 0);
             ~MagicWindow();
             void setLength(int value);
             void setTime(int value);
             void reset();
-            void message(const QString& message);
+            void message(bool correct);
             void clearText();
 
         private slots:
