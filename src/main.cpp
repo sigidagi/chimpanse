@@ -32,7 +32,7 @@ int main(int argc, char* argv[])
 //    app.setStyle("cde");
 
     QSplashScreen* splash = new QSplashScreen;
-    splash->setPixmap(QPixmap(":/images/chimp.png"));
+    splash->setPixmap(QPixmap(":/images/chimpLogo.gif"));
     splash->show();
     
 
