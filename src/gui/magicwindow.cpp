@@ -245,7 +245,7 @@ namespace Oi
         QMessageBox::about(this, tr("About Chimpanse"),
             tr("<h2> Chimpanse 1.0</h2>"
                "<p>Copyright &copy; 2010 sigidagi."
-               "<p>Chimpanse is a cognitive (mind) game. Playing <it>Chimpanse</it> "
+               "<p>Chimpanse is a cognitive (mind) game. Playing <i>Chimpanse</i> "
                "will improve your photographic memory skills. "
                "You will be suprised that "
                "Ayumu, a seven-year-old chimpanse male is a world chimpion " 
